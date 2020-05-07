@@ -1,0 +1,14 @@
+一、环境要求
+tensorflow-gpu==1.13.1
+
+二、Finetune步骤
+1、进入dataset目录下:
+python pre_data.py --filepath /data/home/share1/gpt2-ml-Finetune/data-mayun_xiugai --outfile /data/home/share1/gpt2-ml-Finetune/data/22.json
+filepath为finetune数据目录
+2、生成tfrecord训练数据
+python prepare_data.py -input_fn /data/home/share1/gpt2-ml-Finetune/data
+3、finetune
+CUDA_VISIBLE_DEVICES=0  python train/train_wc.py --input_file=/data/home/share1/gpt2-ml-Finetune/data/train.tfrecord --output_dir=/data/home/share1/gpt2-ml-Finetune/finetune_model --init_checkpoint=/data/home/share1/gpt2-ml/models/mega/ceshi/model.ckpt-100000
+
+机器要求：
+我在32g显存的v-100上调优的，bs只能设为1~
